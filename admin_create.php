@@ -1,14 +1,23 @@
-<?php include 'connection.php';?>
+<?php 
+    session_start();
+    include 'connection.php';
+    if(!isset($_SESSION["username"]))
+    {
+        header("Location: index.php");
+    }
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
         <title>School Management System</title>
         <link rel="stylesheet" href="style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <?php
-            $firstNameErr = $lastNameErr = $userNameErr=$passwordErr=$pasword1Err=$pasword2Err="";
+            $firstNameErr = $lastNameErr = $userNameErr=$passwordErr=$password1Err=$password2Err="";
             $firstName = $lastName = $userName = $password1=$password2= "";
 
             if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -42,7 +51,11 @@
                 if (empty($_POST["uname"])) 
                 {
                     $userNameErr = "User name is required";
-                } 
+                }
+                elseif($conn->query("select username from users where username='".$_POST["uname"]."';")->num_rows>0)
+                {
+                    $userNameErr = "User name is already taken";
+                }
                 else 
                 {
                     $userName = test_input($_POST["uname"]);
@@ -69,7 +82,7 @@
                 }
                 if($firstNameErr=="" && $lastNameErr =="" && $userNameErr=="" && $password1Err=="" && $password2Err=="" && $passwordErr=="")
                 {
-                    $sql = "INSERT INTO admin (first_name,last_name,username,password) VALUES ('".$firstName."', '".$lastName."', '".$userName."', '".$password1."');";
+                    $sql = "INSERT INTO users (first_name,last_name,username,usertype,password) VALUES ('".$firstName."', '".$lastName."', '".$userName."','admin' '".$password1."');";
                     if ($conn->query($sql) === TRUE)
                     {
                         echo "New record created successfully";

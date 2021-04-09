@@ -1,24 +1,54 @@
-<?php include 'connection.php';?>
+<?php
+    session_start();
+    include 'connection.php';
+    #echo($_SERVER["REQUEST_METHOD"]);
+    $loginerror=0;
+    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        $sql = "select * from users where username='".$_POST["uname"]."' and password='".$_POST["password"]."' and usertype='".$_POST["userType"]."';";
+        #echo($sql);
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0)
+        {
+            echo('Hello'.$_POST["uname"]);
+            $_SESSION["username"]=$_POST["uname"];
+            $_SESSION["usertype"]=$_POST["userType"];
+            header("Location: admin.php");
+            exit();
+        }
+        else
+        {
+            $loginerror=1;
+        }
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
         <title>School Management System</title>
         <link rel="stylesheet" href="style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <form action="" method="post">
-            Username: <input type="text" name="name"><br>
-            Password: <input type="text" name="email"><br>
-            <form>
-                <input type="radio" id="userType" name="userType" value="admin">
-                <label for="other">Admin</label>
-                <input type="radio" id="userType" name="userType" value="male">
-                <label for="male">Male</label>
-                <input type="radio" id="userType" name="userType" value="female">
-                <label for="female">Female</label>
-                <input type="submit">
-            </form>
+        <div class="error">
+            <?php
+                if($loginerror==1)
+                {
+                    echo("Invalid login credentials!");
+                }
+            ?>
+        </div>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+            Username: <input type="text" name="uname"><br>
+            Password: <input type="password" name="password"><br>
+            <input type="radio" name="userType" value="admin" checked>
+            <label for="admin">Admin</label>
+            <input type="radio" name="userType" value="staff">
+            <label for="staff">Staff</label>
+            <input type="radio" name="userType" value="student">
+            <label for="student">Student</label><br>
+            <input type="submit" value = "Login">
         </form>
     </body>
 </html>
