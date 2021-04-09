@@ -6,7 +6,6 @@
         header("Location: index.php");
     }
 ?>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,8 +16,8 @@
     </head>
     <body>
         <?php
-            $firstNameErr = $lastNameErr = $userNameErr=$passwordErr=$password1Err=$password2Err="";
-            $firstName = $lastName = $userName = $password1=$password2= "";
+            $firstNameErr = $lastNameErr =$passwordErr=$password1Err=$password2Err="";
+            $firstName = $lastName = $password1=$password2= "";
 
             if ($_SERVER["REQUEST_METHOD"] == "POST")
             {
@@ -48,18 +47,18 @@
                         $lastNameErr = "Only letters and white space allowed";
                     }
                 }
-                if (empty($_POST["uname"])) 
+                /* if (empty($_POST["uname"])) 
                 {
                     $userNameErr = "User name is required";
                 }
-                elseif($conn->query("select username from users where username='".$_POST["uname"]."' and usertype='admin';")->num_rows>0)
+                elseif($conn->query("select username from users where username='".$_POST["uname"]."';")->num_rows>0)
                 {
                     $userNameErr = "User name is already taken";
                 }
                 else 
                 {
                     $userName = test_input($_POST["uname"]);
-                }
+                } */
                 if (empty($_POST["password1"])) 
                 {
                     $password1Err = "Password is required";
@@ -80,41 +79,18 @@
                 {
                     $passwordErr="Passwords must match";
                 }
-                if($firstNameErr=="" && $lastNameErr =="" && $userNameErr=="" && $password1Err=="" && $password2Err=="" && $passwordErr=="")
+                if($firstNameErr=="" && $lastNameErr =="" && $password1Err=="" && $password2Err=="" && $passwordErr=="")
                 {
-                    $sql = "INSERT INTO users (first_name,last_name,username,usertype,password) VALUES ('".$firstName."', '".$lastName."', '".$userName."','admin' '".$password1."');";
+                    $sql = "UPDATE users SET first_name='".$firstName."',last_name='".$lastName."',password='".$password1."' where user_id='".$_POST["user_id"]."';";
                     if ($conn->query($sql) === TRUE)
                     {
-                        echo "New record created successfully";
+                        echo "Details updated successfully";
                     }
                     else
                     {
                         echo "Error: " . $sql . "<br>" . $conn->error;
                     }
                 }
-                /* if (empty($_POST["email"])) 
-                {
-                    $emailErr = "Email is required";
-                }
-                else
-                {
-                    $email = test_input($_POST["email"]);
-                    // check if e-mail address is well-formed
-                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                        $emailErr = "Invalid email format";
-                    }
-                } 
-                if (empty($_POST["comment"])) {
-                $comment = "";
-                } else {
-                $comment = test_input($_POST["comment"]);
-                }
-
-                if (empty($_POST["gender"])) {
-                $genderErr = "Gender is required";
-                } else {
-                $gender = test_input($_POST["gender"]);
-                }*/       
             }
             function test_input($data) {
                 $data = trim($data);
@@ -122,22 +98,25 @@
                 $data = htmlspecialchars($data);
                 return $data;
             }
+            $sql = "select * from users where username='".$_SESSION["username"]."' and usertype='".$_SESSION["usertype"]."';";
+            #echo($sql);
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
         ?>
-        <h2>Admin Creation</h2><br>
+        <h2>Edit Admin details</h2><br>
+        <div><h4>User id = <?php echo($row["user_id"]);?><h4></div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
             <label for="fname">First name:</label><br>
-            <input type="text" id="fname" name="fname" required><span class="error">* <?php echo $firstNameErr;?></span><br>
+            <input type="text" id="fname" name="fname" value="<?php echo($row["first_name"]);?>" required><span class="error">* <?php echo $firstNameErr;?></span><br>
             <label for="lname">Last name:</label><br>
-            <input type="text" id="lname" name="lname" required><span class="error">* <?php echo $lastNameErr;?></span><br>
-            <label for="uname">Username:</label><br>
-            <input type="text" id="uname" name="uname" required><span class="error">* <?php echo $userNameErr;?></span><br>
+            <input type="text" id="lname" name="lname" value="<?php echo($row["last_name"]);?>" required><span class="error">* <?php echo $lastNameErr;?></span><br>
+            <div>Username: <?php echo($row["username"]);?> (cannot be changed)</div>
             <label for="password1">Password:</label><br>
             <input type="password" id="password1" name="password1" required><span class="error">* <?php echo $password1Err;?></span><br>
             <label for="password2">Confirm password:</label><br>
             <input type="password" id="password2" name="password2" required><span class="error">* <?php echo $password2Err;?></span><br>
             <span class="error"><?php echo $passwordErr;?><br>
+            <input type="hidden" name="user_id" value="<?php echo($row["user_id"]);?>">
             <input type="submit"><br>
             <a href="admin.php"><< Back to admin panel</a>
         </form>
-    </body>
-</html>

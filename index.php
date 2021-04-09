@@ -21,6 +21,12 @@
             $loginerror=1;
         }
     }
+    //if user is already logged in, then redirect. Don't show index page.
+    elseif(isset($_SESSION["username"]) && $_SESSION["usertype"]=="admin")
+    {
+        header("Location: ".$_SESSION["usertype"].".php");
+        exit();
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -40,8 +46,8 @@
             ?>
         </div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-            Username: <input type="text" name="uname"><br>
-            Password: <input type="password" name="password"><br>
+            Username: <input type="text" name="uname" required><br>
+            Password: <input type="password" name="password" required><br>
             <input type="radio" name="userType" value="admin" checked>
             <label for="admin">Admin</label>
             <input type="radio" name="userType" value="staff">
