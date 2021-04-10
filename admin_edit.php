@@ -1,7 +1,7 @@
 <?php 
     session_start();
     include 'connection.php';
-    if(!isset($_SESSION["username"]))
+    if(!isset($_SESSION["username"]) && $_SESSION["usertype"]!='admin')
     {
         header("Location: index.php");
     }
@@ -10,41 +10,27 @@
 <html>
     <head>
         <title>School Management System</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="style1.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <?php
-            $firstNameErr = $lastNameErr =$passwordErr=$password1Err=$password2Err="";
-            $firstName = $lastName = $password1=$password2= "";
+            $nameErr=$passwordErr=$password1Err=$password2Err="";
+            $name = $lastName = $password1=$password2= "";
 
             if ($_SERVER["REQUEST_METHOD"] == "POST")
             {
-                if (empty($_POST["fname"])) 
+                if (empty($_POST["name"])) 
                 {
-                    $firstNameErr = "First name is required";
+                    $nameErr = "Name is required";
                 } 
                 else 
                 {
-                    $firstName = test_input($_POST["fname"]);
+                    $name = test_input($_POST["name"]);
                     // check if name only contains letters and whitespace
-                    if (!preg_match("/^[a-zA-Z-' ]*$/",$firstName)) 
+                    if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) 
                     {
                         $fistNameErr = "Only letters and white space allowed";
-                    }
-                }
-                if (empty($_POST["lname"])) 
-                {
-                    $lastNameErr = "Last name is required";
-                } 
-                else 
-                {
-                    $lastName = test_input($_POST["lname"]);
-                    // check if name only contains letters and whitespace
-                    if (!preg_match("/^[a-zA-Z-' ]*$/",$lastName)) 
-                    {
-                        $lastNameErr = "Only letters and white space allowed";
                     }
                 }
                 /* if (empty($_POST["uname"])) 
@@ -79,9 +65,9 @@
                 {
                     $passwordErr="Passwords must match";
                 }
-                if($firstNameErr=="" && $lastNameErr =="" && $password1Err=="" && $password2Err=="" && $passwordErr=="")
+                if($nameErr==""  && $password1Err=="" && $password2Err=="" && $passwordErr=="")
                 {
-                    $sql = "UPDATE users SET first_name='".$firstName."',last_name='".$lastName."',password='".$password1."' where user_id='".$_POST["user_id"]."';";
+                    $sql = "UPDATE users SET name='".$name."',password='".$password1."' where user_id='".$_POST["user_id"]."';";
                     if ($conn->query($sql) === TRUE)
                     {
                         echo "Details updated successfully";
@@ -103,13 +89,13 @@
             $result = $conn->query($sql);
             $row = $result->fetch_assoc();
         ?>
+
+        <a href="admin.php"><< Back to admin panel</a>
         <h2>Edit Admin details</h2><br>
         <div><h4>User id = <?php echo($row["user_id"]);?><h4></div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-            <label for="fname">First name:</label><br>
-            <input type="text" id="fname" name="fname" value="<?php echo($row["first_name"]);?>" required><span class="error">* <?php echo $firstNameErr;?></span><br>
-            <label for="lname">Last name:</label><br>
-            <input type="text" id="lname" name="lname" value="<?php echo($row["last_name"]);?>" required><span class="error">* <?php echo $lastNameErr;?></span><br>
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" value="<?php echo($row["name"]);?>" required><span class="error">* <?php echo $nameErr;?></span><br>
             <div>Username: <?php echo($row["username"]);?> (cannot be changed)</div>
             <label for="password1">Password:</label><br>
             <input type="password" id="password1" name="password1" required><span class="error">* <?php echo $password1Err;?></span><br>
@@ -118,5 +104,4 @@
             <span class="error"><?php echo $passwordErr;?><br>
             <input type="hidden" name="user_id" value="<?php echo($row["user_id"]);?>">
             <input type="submit"><br>
-            <a href="admin.php"><< Back to admin panel</a>
         </form>

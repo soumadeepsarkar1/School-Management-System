@@ -2,7 +2,7 @@
     session_start();
     include 'connection.php';
     //echo(isset($_SESSION["username"]));
-    if(!isset($_SESSION["username"]))
+    if(!isset($_SESSION["username"]) && $_SESSION["usertype"]!='admin')
     {
         header("Location: index.php");
     }
@@ -11,7 +11,7 @@
 <html>
     <head>
         <title>School Management System</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="style1.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
