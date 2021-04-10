@@ -1,7 +1,18 @@
+<?php
+    session_start();
+    include 'connection.php';
+    //echo(isset($_SESSION["username"]));
+    if(!isset($_SESSION["username"]) && $_SESSION["usertype"]!='admin')
+    {
+        header("Location: index.php");
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="side_nav.css">
+<link rel="stylesheet" href="style1.css">
 <style>
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -17,7 +28,7 @@ html {
 }
 
 .column {
-  float: left;
+  float: right;
   width: 30%;
   margin-bottom: 20px;
   padding: 0 8px;
@@ -76,30 +87,27 @@ html {
 </style>
 </head>
 <body>
-
+<?php include 'side_nav.php'; ?>
 <div class="about-section">
   <h1>About Us Page</h1>
   <p>We are the students from University of Engineering and Management, Kolkata developed this school management system website.</p>
   <p>For any querries contact us from below given credentials.</p>
   <p>Thank You.</p>
 </div>
-
 <h2 style="text-align:center">Our Team</h2>
 <div class="row">
   <div class="column">
     <div class="card">
-      <img src="soumadeep.png" alt="Jane" style="width: 100%">
+      <img src="sohini1.jpeg" alt="John" style="width:100%">
       <div class="container">
-        <h2>Soumadeep Sarkar</h2>
+        <h2>Sohini Dutta</h2>
         <p class="title">3rd Year Student</p>
-        <p>Computer Science and Engineering, B.Tech</p>
-        <p>Roll - 62</p>
-        <p>jane@example.com</p>
-        <p><button class="button" >Contact</button></p>
+        <p>Computer Science and Enginnering, B.Tech</p>
+        <p>john@example.com</p>
+        <p><button class="button">Contact</button></p>
       </div>
     </div>
   </div>
-
   <div class="column">
     <div class="card">
       <img src="soumya1.jpg" alt="Mike" style="width:100%">
@@ -113,19 +121,20 @@ html {
       </div>
     </div>
   </div>
-  
   <div class="column">
     <div class="card">
-      <img src="sohini1.jpeg" alt="John" style="width:100%">
+      <img src="soumadeep.png" alt="Jane" style="width: 100%">
       <div class="container">
-        <h2>Sohini Dutta</h2>
+        <h2>Soumadeep Sarkar</h2>
         <p class="title">3rd Year Student</p>
-        <p>Computer Science and Enginnering, B.Tech</p>
-        <p>john@example.com</p>
-        <p><button class="button">Contact</button></p>
+        <p>Computer Science and Engineering, B.Tech</p>
+        <p>Roll - 62</p>
+        <p>jane@example.com</p>
+        <p><button class="button" >Contact</button></p>
       </div>
     </div>
   </div>
+  
 </div>
 
 </body>

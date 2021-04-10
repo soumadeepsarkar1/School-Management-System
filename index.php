@@ -13,8 +13,16 @@
             echo('Hello'.$_POST["uname"]);
             $_SESSION["username"]=$_POST["uname"];
             $_SESSION["usertype"]=$_POST["userType"];
-            header("Location: admin.php");//redirecting to admin
-            exit();
+            if($_SESSION["usertype"]=='admin')
+            {
+                header("Location: admin.php");//redirecting to admin
+                exit();
+            }
+            elseif($_SESSION["usertype"]=='student')
+            {
+                header("Location: student_dashboard.php");//redirecting to student_dashboard
+                exit();
+            }
         }
         else
         {

@@ -92,3 +92,10 @@
 	cursor:pointer;
 	border-radius:10px;
 }
+.flex-container {
+	display: flex;
+  }
+.logout
+{
+	justify-content: flex-end;
+}

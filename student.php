@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    include 'connection.php';
+    //echo(isset($_SESSION["username"]));
+    if(!isset($_SESSION["username"]) && $_SESSION["usertype"]!='admin')
+    {
+        header("Location: index.php");
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,9 +16,10 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="side_nav.css">
     </head>
     <body>
-       
+    <?php include 'side_nav.php'; ?>
         <form action="" method="post">
 
             <h1>Edit Student Details</h1>
