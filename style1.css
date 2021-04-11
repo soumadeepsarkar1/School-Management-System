@@ -94,8 +94,9 @@
 }
 .flex-container {
 	display: flex;
-  }
-.logout
+}
+td,th
 {
-	justify-content: flex-end;
+	width:15vw;
+	text-align: center;
 }

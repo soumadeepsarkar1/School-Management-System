@@ -90,7 +90,7 @@
             //echo ($sql);
             if ($conn->query($sql) === TRUE)
             {
-                echo "New record created successfully";
+                //echo "New record created successfully";
             }
             else
             {
@@ -120,7 +120,7 @@
             // echo ($sql);
             if ($conn->query($sql) === TRUE)
             {
-                echo "New record created successfully";
+                //echo "New record created successfully";
             }
             else
             {
@@ -198,6 +198,30 @@
 				</form>
 			</div>
 		</div>
+        <div id="admin_student_content" class=flex-container>
+            <table>
+                <th class="id">User_id</th><th>Name</th><th>Class</th><th>Roll No.</th><th>Email</th><th>Actions</th>
+                <?php
+                $sql="select * from (select user_id, name from users) as u natural join (select user_id,class, rollNo,email from students) as s order by class,name;";
+                $result=$conn->query($sql);
+                if($result->num_rows>0)
+                {
+                    while($row=$result->fetch_assoc())
+                    {
+                        echo "
+                        <tr class=\"data\">
+                            <td class=\"id\">".$row["user_id"]."</td><td>".$row["name"]."</td><td>".$row["class"]."</td><td>".$row["rollNo"]."</td><td>".$row["email"]."</td>                            </td>
+                            <td>
+                                <a href=\"admin_student_details.php?user_id=".$row["user_id"]."\">Details</a>
+                                <a href=\"admin_student_delete.php?user_id=".$row["user_id"]."\">Update</a>
+                                <a href=\"admin_student_update.php?user_id=".$row["user_id"]."\">Delete</a>
+                            </td>
+                        </tr>";
+                    }
+                }
+                ?>
+            </table>
+        </div>
         <script>
             var addStudentButton=document.getElementById("addStudentButton");
             var addStudentModal=document.getElementById("addStudentModal");

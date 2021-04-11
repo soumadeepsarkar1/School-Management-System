@@ -8,11 +8,14 @@
         $sql = "select * from users where username='".$_POST["uname"]."' and password='".$_POST["password"]."' and usertype='".$_POST["userType"]."';";
         #echo($sql);
         $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
         if ($result->num_rows > 0)
         {
-            echo('Hello'.$_POST["uname"]);
+            //echo('Hello'.$_POST["uname"]);
+            $_SESSION["user_id"]=$row["user_id"];
             $_SESSION["username"]=$_POST["uname"];
             $_SESSION["usertype"]=$_POST["userType"];
+            echo($row["user_id"]);
             if($_SESSION["usertype"]=='admin')
             {
                 header("Location: admin.php");//redirecting to admin
@@ -96,6 +99,15 @@
             background: rgb(17 143 158);
             /*greenish background */
             color:white;
+        }
+        input[type=radio]
+        {
+            width:1.5em;
+            height:1.5em;
+        }
+        label
+        {
+            font-size:1.5em;
         }
         </style>
     </head>

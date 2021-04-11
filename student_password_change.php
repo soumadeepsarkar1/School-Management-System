@@ -1,6 +1,7 @@
-<?php 
+<?php
     session_start();
     include 'connection.php';
+    //echo(isset($_SESSION["username"]));
     if(!isset($_SESSION["username"]) && $_SESSION["usertype"]!='admin')
     {
         header("Location: index.php");
@@ -9,14 +10,41 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>School Management System</title>
-        <link rel="stylesheet" href="style1.css">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Student Details</title>
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="side_nav.css">
+        <style>
+            input[type="text"],
+            input[type="number"],
+            input[type="date"],
+            input[type="email"],
+            input[type="password"],
+            textarea,
+            select {
+                background: rgba(19, 2, 2, 0.1);
+                border: none;
+                font-size: 16px;
+                height: auto;
+                margin: 0;
+                outline: 0;
+                padding: 15px;
+                width: 100%;
+                background-color: #e8eeef;
+                color: #01090f;
+                box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+                margin-bottom: 30px;
+            }
+            </style>
     </head>
     <body>
+        <?php include 'side_nav.php'; ?>
         <?php
-            $nameErr=$userName=$passwordErr=$password1Err=$password2Err="";
-            $name =$userNameErr=$lastName = $password1=$password2= "";
+            $nameErr=$passwordErr=$password1Err=$password2Err="";
+            $name = $lastName = $password1=$password2= "";
 
             if ($_SERVER["REQUEST_METHOD"] == "POST")
             {
@@ -33,18 +61,18 @@
                         $nameErr = "Only letters and white space allowed";
                     }
                 }
-                if (empty($_POST["username"])) 
+                /* if (empty($_POST["uname"])) 
                 {
                     $userNameErr = "User name is required";
                 }
-                elseif($conn->query("select username from users where username='".$_POST["username"]."';")->num_rows>0)
+                elseif($conn->query("select username from users where username='".$_POST["uname"]."';")->num_rows>0)
                 {
                     $userNameErr = "User name is already taken";
                 }
                 else 
                 {
-                    $userName = test_input($_POST["username"]);
-                }
+                    $userName = test_input($_POST["uname"]);
+                } */
                 if (empty($_POST["password1"])) 
                 {
                     $password1Err = "Password is required";
@@ -67,8 +95,7 @@
                 }
                 if($nameErr==""  && $password1Err=="" && $password2Err=="" && $passwordErr=="")
                 {
-                    $sql = "UPDATE users SET name='".$name."',username='".$userName."',password='".$password1."' where user_id='".$_POST["user_id"]."';";
-                    $_SESSION["username"]=$_POST["username"];
+                    $sql = "UPDATE users SET name='".$name."',password='".$password1."' where user_id='".$_POST["user_id"]."';";
                     if ($conn->query($sql) === TRUE)
                     {
                         echo "Details updated successfully";
@@ -90,21 +117,22 @@
             $result = $conn->query($sql);
             $row = $result->fetch_assoc();
         ?>
-        <a href="admin.php"><< Back to admin panel</a>
-        <h2>Edit Admin details</h2><br>
-        <div><h4>User id = <?php echo($row["user_id"]);?><h4></div>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name" value="<?php echo($row["name"]);?>" required><span class="error">* <?php echo $nameErr;?></span><br>
-            <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username" value="<?php echo($row["username"]);?>" required><span class="error">* <?php echo $userNameErr;?></span><br>
-            <label for="password1">Password:</label><br>
-            <input type="password" id="password1" name="password1" required><span class="error">* <?php echo $password1Err;?></span><br>
-            <label for="password2">Confirm password:</label><br>
-            <input type="password" id="password2" name="password2" required><span class="error">* <?php echo $password2Err;?></span><br>
-            <span class="error"><?php echo $passwordErr;?><br>
-            <input type="hidden" name="user_id" value="<?php echo($row["user_id"]);?>">
-            <input type="submit"><br>
+        <form action="" method="post">
+
+            <h1>Change password</h1>
+            <fieldset>
+                <label for="password">Original password :</label>
+                <input type="password" name="Opassword">
+                <br>
+                <br>
+                <label for="password">New password :</label>
+                <input type="password" name="password1">
+                <br>
+                <br>
+                <label for="password">Confirm password :</label>
+                <input type="password" name="password2">
+            </fieldset>
+            <button type="Submit">Submit</button>
         </form>
     </body>
 </html>
