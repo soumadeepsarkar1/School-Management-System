@@ -2,9 +2,10 @@
     session_start();
     include 'connection.php';
     //echo(isset($_SESSION["username"]));
-    if(!isset($_SESSION["username"]) && $_SESSION["usertype"]!='admin')
+    if(!(isset($_SESSION["username"]) && $_SESSION["usertype"]=='student'))
     {
         header("Location: index.php");
+        exit();
     }
 ?>
 <!DOCTYPE html>
@@ -129,7 +130,7 @@ html {
         <p class="title">3rd Year Student</p>
         <p>Computer Science and Engineering, B.Tech</p>
         <p>Roll - 62</p>
-        <p>jane@example.com</p>
+        <p>soumadeepsarkar1@gmail.com</p>
         <p><button class="button" >Contact</button></p>
       </div>
     </div>

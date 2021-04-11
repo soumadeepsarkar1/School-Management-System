@@ -2,9 +2,10 @@
     session_start();
     include 'connection.php';
     //echo(isset($_SESSION["username"]));
-    if(!isset($_SESSION["username"]) && $_SESSION["usertype"]!='admin')
+    if(!(isset($_SESSION["username"]) && $_SESSION["usertype"]=='student'))
     {
         header("Location: index.php");
+        exit();
     }
 ?>
 <!DOCTYPE html>

@@ -2,9 +2,10 @@
     session_start();
     include 'connection.php';
     //echo(isset($_SESSION["username"]));
-    if(!isset($_SESSION["username"]) && $_SESSION["usertype"]!='admin')
+    if(!(isset($_SESSION["username"]) && $_SESSION["usertype"]=='admin'))
     {
         header("Location: index.php");
+        exit();
     }
     $nameErr=$userNameErr= $admissionNoErr=$passwordErr=$password1Err=$password2Err= $classErr="";
     $name =$userName=$admissionNo=$password1=$password2="";
@@ -182,7 +183,7 @@
                     <input class="addStudentFormInput" type="text" name="name"  placeholder="Name" value = "<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){ echo($_POST["name"]); }?>" required><span class="error">* <?php echo $nameErr;?></span>
                     <input type="text" class="addStudentFormInput" name="uname" placeholder="Username." value = "<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){ echo($_POST["uname"]); }?>" required><span class="error">* <?php echo $userNameErr;?></span>
                     <input class="addStudentFormInput" type="text" name="admissionNo"  placeholder="Admission No." value = "<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){ echo($_POST["admissionNo"]); }?>" required><span class="error">* <?php echo $admissionNoErr;?></span>
-                    <input class="addStudentFormInput" type="number" name="class" placeholder="Class (1 - 10)"  value = "<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){ echo($_POST["class"]); }?>" min="1" max="10" required><span class="error">* <?php echo $classErr;?></span>
+                    <input class="addStudentFormInput" type="number" name="class" placeholder="Class (1 - 12)"  value = "<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){ echo($_POST["class"]); }?>" min="1" max="12" required><span class="error">* <?php echo $classErr;?></span>
                     <input class="addStudentFormInput" type="password" name="password1" placeholder="Password" required><span class="error">* <?php echo $password1Err;?></span><br>
                     <input type="password" class="addStudentFormInput" name="password2" placeholder="Confirm password" required><span class="error">* <?php echo $password2Err;?></span><br>
                     <div class="error"><?php echo $passwordErr;?></div>
@@ -213,8 +214,8 @@
                             <td class=\"id\">".$row["user_id"]."</td><td>".$row["name"]."</td><td>".$row["class"]."</td><td>".$row["rollNo"]."</td><td>".$row["email"]."</td>                            </td>
                             <td>
                                 <a href=\"admin_student_details.php?user_id=".$row["user_id"]."\">Details</a>
-                                <a href=\"admin_student_delete.php?user_id=".$row["user_id"]."\">Update</a>
-                                <a href=\"admin_student_update.php?user_id=".$row["user_id"]."\">Delete</a>
+                                <a href=\"admin_student_update.php?user_id=".$row["user_id"]."\">Update</a>
+                                <a href=\"admin_student_delete.php?user_id=".$row["user_id"]."\">Delete</a>
                             </td>
                         </tr>";
                     }

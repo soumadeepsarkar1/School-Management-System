@@ -2,9 +2,10 @@
     session_start();
     include 'connection.php';
     //echo(isset($_SESSION["username"]));
-    if(!isset($_SESSION["username"]) && $_SESSION["usertype"]!='admin')
+    if(!(isset($_SESSION["username"]) && $_SESSION["usertype"]=='student'))
     {
         header("Location: index.php");
+        exit();
     }
 ?>
 <!DOCTYPE html>
@@ -18,6 +19,7 @@
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="side_nav.css">
         <style>
+            .error {color: #FF0000;}
             input[type="text"],
             input[type="number"],
             input[type="date"],
@@ -32,7 +34,7 @@
                 margin: 0;
                 outline: 0;
                 padding: 15px;
-                width: 100%;
+                width: 95%;
                 background-color: #e8eeef;
                 color: #01090f;
                 box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
@@ -43,36 +45,23 @@
     <body>
         <?php include 'side_nav.php'; ?>
         <?php
-            $nameErr=$passwordErr=$password1Err=$password2Err="";
-            $name = $lastName = $password1=$password2= "";
+            $originalPasswordErr=$passwordErr=$password1Err=$password2Err="";
+            $password1=$password2= "";
 
             if ($_SERVER["REQUEST_METHOD"] == "POST")
             {
-                if (empty($_POST["name"])) 
+                $sql = "select password from users where username='".$_SESSION["username"]."' and usertype='".$_SESSION["usertype"]."';";
+                #echo($sql);
+                $result = $conn->query($sql);
+                $row = $result->fetch_assoc();
+                if(empty($_POST["originalPassword"]))
                 {
-                    $nameErr = "Name is required";
-                } 
-                else 
-                {
-                    $name = test_input($_POST["name"]);
-                    // check if name only contains letters and whitespace
-                    if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) 
-                    {
-                        $nameErr = "Only letters and white space allowed";
-                    }
+                    $originalPasswordErr="Original password is required";
                 }
-                /* if (empty($_POST["uname"])) 
+                elseif($row["password"]!=$_POST["originalPassword"])
                 {
-                    $userNameErr = "User name is required";
+                    $originalPasswordErr="Incorrect password";
                 }
-                elseif($conn->query("select username from users where username='".$_POST["uname"]."';")->num_rows>0)
-                {
-                    $userNameErr = "User name is already taken";
-                }
-                else 
-                {
-                    $userName = test_input($_POST["uname"]);
-                } */
                 if (empty($_POST["password1"])) 
                 {
                     $password1Err = "Password is required";
@@ -93,9 +82,9 @@
                 {
                     $passwordErr="Passwords must match";
                 }
-                if($nameErr==""  && $password1Err=="" && $password2Err=="" && $passwordErr=="")
+                if($password1Err=="" && $password2Err=="" && $passwordErr=="")
                 {
-                    $sql = "UPDATE users SET name='".$name."',password='".$password1."' where user_id='".$_POST["user_id"]."';";
+                    $sql = "UPDATE users SET password='".$password1."' where user_id='".$_SESSION["user_id"]."';";
                     if ($conn->query($sql) === TRUE)
                     {
                         echo "Details updated successfully";
@@ -106,31 +95,19 @@
                     }
                 }
             }
-            function test_input($data) {
-                $data = trim($data);
-                $data = stripslashes($data);
-                $data = htmlspecialchars($data);
-                return $data;
-            }
-            $sql = "select * from users where username='".$_SESSION["username"]."' and usertype='".$_SESSION["usertype"]."';";
-            #echo($sql);
-            $result = $conn->query($sql);
-            $row = $result->fetch_assoc();
         ?>
-        <form action="" method="post">
-
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
             <h1>Change password</h1>
             <fieldset>
                 <label for="password">Original password :</label>
-                <input type="password" name="Opassword">
-                <br>
+                <input type="password" name="originalPassword" required><span class="error">* <?php echo $originalPasswordErr;?></span>
                 <br>
                 <label for="password">New password :</label>
-                <input type="password" name="password1">
-                <br>
+                <input type="password" name="password1" required><span class="error">* <?php echo $password1Err;?></span>
                 <br>
                 <label for="password">Confirm password :</label>
-                <input type="password" name="password2">
+                <input type="password" name="password2" required><span class="error">* <?php echo $password2Err;?></span>
+                <div class="error"><?php echo $passwordErr;?></div>
             </fieldset>
             <button type="Submit">Submit</button>
         </form>

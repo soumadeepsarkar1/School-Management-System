@@ -2,7 +2,7 @@
     session_start();
     include 'connection.php';
     //echo(isset($_SESSION["username"]));
-    if(!isset($_SESSION["username"]) && $_SESSION["usertype"]!='admin')
+    if(!(isset($_SESSION["username"]) && $_SESSION["usertype"]=='student'))
     {
         header("Location: index.php");
     }
@@ -126,33 +126,25 @@
                 <legend>Your Profile</legend>
                 <a href="student_password_change.php">Change password</a>
                 <label for="name">Name :</label>
-                <input type="text" name="name" value="<?php echo $row["name"]?>"><span class="error">* <?php echo $nameErr;?></span><br>
-                <br>
+                <input type="text" name="name" value="<?php echo $row["name"]?>"><span class="error">* <?php echo $nameErr;?></span>
                 <br>
                 <label for="username">Username :</label>
-                <input type="text" name="username" value="<?php echo $row["username"]?>"><span class="error">* <?php echo $userNameErr;?></span><br>
-                <br>
+                <input type="text" name="username" value="<?php echo $row["username"]?>"><span class="error">* <?php echo $userNameErr;?></span>
                 <br>
                 <label for="phoneNo">Mobile Number :</label>
                 <input type="text" name="phoneNo" value="<?php echo $row["phoneNo"]?>">
                 <br>
-                <br>
                 <label for="email">Email ID :</label>
                 <input type="email" name="email" value="<?php echo $row["email"]?>">
-                <br>
-                <br>
                 <br>
                 <label for="address">Address :</label>
                 <input type="text" name="address" value="<?php echo $row["address"]?>">
                 <br>
-                <br>
                 <label for="mother">Mother's Name :</label>
                 <input type="text" name="mother" value="<?php echo $row["mother"]?>">
                 <br>
-                <br>
                 <label for="father">Father's Name :</label>
                 <input type="text" name="father" value="<?php echo $row["father"]?>">
-                <br>
                 <br>
                 <label for="DOB">Date of Birth :</label>
                 <input type="date" name="DOB" value="<?php echo $row["DOB"]?>">
