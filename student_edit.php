@@ -46,9 +46,58 @@
         <?php
             $nameErr=$emailErr=$userNameErr="";
             $name =$email=$phoneNo=$address=$DOB=$mother=$father=$userName="";
-
+        
             if ($_SERVER["REQUEST_METHOD"] == "POST")
             {
+                //echo(!(is_uploaded_file($_FILES['student_image']['tmp_name'])));
+                if(is_uploaded_file($_FILES['student_image']['tmp_name']))//check if any file has been uploaded
+                {
+                    //managing image
+                    //$target_file = $target_dir . basename($_FILES["student_image"]["name"]);
+                    $uploadOk = 1;
+                    $imageFileType = strtolower(pathinfo($_FILES["student_image"]["name"],PATHINFO_EXTENSION));
+                    echo $imageFileType."<br>";
+                    $target_dir = "student_images/";
+                    //assigning a random name to the file
+                    $ran=md5(time().rand());
+                    $target_file = $ran.".".$imageFileType;
+                    // Check if image file is a actual image or fake image
+                    $check = getimagesize($_FILES["student_image"]["tmp_name"]);
+                    if($check === false)
+                    {
+                        echo "File is not an image.";
+                        $uploadOk = 0;
+                    }
+                    // Check file size
+                    elseif ($_FILES["student_image"]["size"] > 500000)
+                    {
+                        echo "Sorry, your file is too large.";
+                        $uploadOk = 0;
+                    }
+                    // Allow certain file formats
+                    elseif($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) 
+                    {
+                        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                        $uploadOk = 0;
+                    }
+                    // Check if $uploadOk is set to 0 by an error
+                    if ($uploadOk == 0)
+                    {
+                        echo "Sorry, your file was not uploaded.";
+                        // if everything is ok, try to upload file
+                    }
+                    else 
+                    {
+                        if (move_uploaded_file($_FILES["student_image"]["tmp_name"],$target_dir.$target_file))
+                        {
+                            echo "The file ". htmlspecialchars( basename( $_FILES["student_image"]["name"])). " has been uploaded.";
+                        }
+                        else 
+                        {
+                            echo "Sorry, there was an error uploading your file.";
+                        }
+                    }
+                }
                 if (empty($_POST["name"])) 
                 {
                     $nameErr = "Name is required";
@@ -84,7 +133,7 @@
                     $father=test_input($_POST["father"]);
                     $DOB=$_POST["DOB"];
                     //echo("<br>".$DOB."<br>");
-                    $sql = "UPDATE users SET name='".$name."',username='".$userName."' where user_id='".$_SESSION["user_id"]."';";
+                    $sql = "UPDATE users SET name='".$name."',username='".$userName."' where user_id=".$_SESSION["user_id"].";";
                     $_SESSION["username"]=$userName;
                     //echo($sql);
                     if ($conn->query($sql) === TRUE)
@@ -95,7 +144,7 @@
                     {
                         echo "Error: " . $sql . "<br>" . $conn->error;
                     }
-                    $sql = "UPDATE students SET DOB='".$DOB."',phoneNo='".$phoneNo."',email='".$email."',address='".$address."',mother='".$mother."',father='".$father."' where user_id='".$_SESSION["user_id"]."';";
+                    $sql = "UPDATE students SET DOB='".$DOB."',phoneNo='".$phoneNo."',email='".$email."',address='".$address."',mother='".$mother."',father='".$father."' where user_id=".$_SESSION["user_id"].";";
                     //echo($sql);
                     if ($conn->query($sql) === TRUE)
                     {
@@ -104,6 +153,21 @@
                     else
                     {
                         echo "Error: " . $sql . "<br>" . $conn->error;
+                    }
+                    if(isset($target_file))
+                    {
+                        $sql="select image from students where user_id=".$_SESSION["user_id"].";";
+                        $result = $conn->query($sql);
+                        $row = $result->fetch_assoc();
+                        if(!empty($row["image"]))
+                        {
+                            unlink("student_images/".$row["image"]);
+                        }
+                        $sql="update students set image='".$target_file."' where user_id=".$_SESSION["user_id"].";";
+                        if ($conn->query($sql) === FALSE)
+                        {
+                            echo "Error: " . $sql . "<br>" . $conn->error;
+                        }
                     }
                 }
             }
@@ -115,15 +179,29 @@
             }
 
             //echo($_SESSION["user_id"]);
-            $sql = "select * from (select user_id,name,username,password from users where user_id=".$_SESSION["user_id"].") as u natural join (select user_id,DOB,gender,phoneNo,email,address,mother,father from students where user_id=".$_SESSION["user_id"].") as s;";
+            $sql = "select * from (select user_id,name,username,password from users where user_id=".$_SESSION["user_id"].") as u natural join (select user_id,DOB,gender,phoneNo,email,address,mother,father,image from students where user_id=".$_SESSION["user_id"].") as s;";
             //echo($sql);
             $result = $conn->query($sql);
             $row = $result->fetch_assoc();
         ?>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
             <h1>Edit Student Details</h1>
             <fieldset>
                 <legend>Your Profile</legend>
+                <div id = "student_image" style="height:70%;width:70%;margin-left:auto;margin-right:auto;">
+                    <?php
+                        if(empty($row["image"]))
+                        {
+                            echo('Image not uploaded');
+                        }
+                        else
+                        {
+                            echo("<img src = \"student_images\\".$row["image"]."\" style=\"width:100%;\">");
+                        }
+                    ?>
+                </div>
+                <input type="file" name="student_image">
+                <br>
                 <a href="student_password_change.php">Change password</a>
                 <label for="name">Name :</label>
                 <input type="text" name="name" value="<?php echo $row["name"]?>"><span class="error">* <?php echo $nameErr;?></span>
