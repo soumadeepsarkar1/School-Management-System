@@ -69,7 +69,7 @@
                 }
                 if($nameErr=="" && $userNameErr=="" && $password1Err=="" && $password2Err=="" && $passwordErr=="")
                 {
-                    $sql = "INSERT INTO users (name,username,usertype,password) VALUES ('".$name."', '".$userName."','admin' '".$password1."');";
+                    $sql = "INSERT INTO users (name,username,usertype,password) VALUES ('".$name."', '".$userName."','admin', '".$password1."');";
                     if ($conn->query($sql) === TRUE)
                     {
                         echo "New record created successfully";

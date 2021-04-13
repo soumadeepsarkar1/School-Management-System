@@ -104,7 +104,7 @@ html {
         <h2>Sohini Dutta</h2>
         <p class="title">3rd Year Student</p>
         <p>Computer Science and Enginnering, B.Tech</p>
-        <p>john@example.com</p>
+        <p>sohinidutta008@gmail.com</p>
         <p><button class="button">Contact</button></p>
       </div>
     </div>

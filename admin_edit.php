@@ -72,7 +72,7 @@
                     $_SESSION["username"]=$_POST["username"];
                     if ($conn->query($sql) === TRUE)
                     {
-                        echo "Details updated successfully";
+                        //echo "Details updated successfully";
                     }
                     else
                     {

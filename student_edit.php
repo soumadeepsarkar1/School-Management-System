@@ -90,7 +90,7 @@
                     {
                         if (move_uploaded_file($_FILES["student_image"]["tmp_name"],$target_dir.$target_file))
                         {
-                            echo "The file ". htmlspecialchars( basename( $_FILES["student_image"]["name"])). " has been uploaded.";
+                            //echo "The file ". htmlspecialchars( basename( $_FILES["student_image"]["name"])). " has been uploaded.";
                         }
                         else 
                         {
@@ -138,7 +138,7 @@
                     //echo($sql);
                     if ($conn->query($sql) === TRUE)
                     {
-                        echo "Details updated successfully";
+                        //echo "Details updated successfully";
                     }
                     else
                     {
@@ -148,7 +148,7 @@
                     //echo($sql);
                     if ($conn->query($sql) === TRUE)
                     {
-                        echo "Details updated successfully";
+                        //echo "Details updated successfully";
                     }
                     else
                     {
@@ -156,6 +156,8 @@
                     }
                     if(isset($target_file))
                     {
+                        //check if there is already an image available for that student,
+                        //if available then delete the previous image and insert the new image
                         $sql="select image from students where user_id=".$_SESSION["user_id"].";";
                         $result = $conn->query($sql);
                         $row = $result->fetch_assoc();
