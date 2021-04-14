@@ -17,6 +17,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="style1.css">
         <link rel="stylesheet" href="side_nav.css">
         <style>
             input[type="text"],
@@ -47,6 +48,7 @@
             </style>
     </head>
     <body>
+        <?php include('admin_header.php');?>
         <a href="admin_students.php"><< Back to students</a>
         <?php
             $nameErr=$emailErr=$userNameErr=$admissionNoErr=$classErr="";

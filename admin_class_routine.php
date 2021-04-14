@@ -75,6 +75,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
+        <?php include('admin_header.php');?>
         <a href="admin.php"><< Back to admin panel</a>
         <div>
             <form id="class_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">

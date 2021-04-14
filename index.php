@@ -43,7 +43,7 @@
 <html>
     <head>
         <title>School Management System</title>
-        <link rel="stylesheet" href="style1.css">
+        <!-- <link rel="stylesheet" href="style1.css"> -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Add icon library -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -93,12 +93,15 @@
         .btn:hover {
         opacity: 1;
         }
-        header {
-            padding : 50px;
+        #user_login_header {
             text-align: center; 
             background: rgb(17 143 158);
             /*greenish background */
             color:white;
+            height:10vh;
+            margin-bottom:2vh;
+            margin-top:2vh;
+            padding-top:2px;
         }
         input[type=radio]
         {
@@ -109,9 +112,22 @@
         {
             font-size:1.5em;
         }
+        header
+        {
+            width:100%;
+            background-color:blue;
+            font-size:1.5em;
+            text-align:center;
+            height:10vh;
+            color:white;
+            padding:14px;
+        }
         </style>
     </head>
     <body>
+        <header>
+            School Management System
+        </header>
         <div class="error">
             <?php
                 if($loginerror==1)
@@ -121,11 +137,9 @@
             ?>
         </div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" style="max-width:500px;margin:auto">
-            <header>
+            <div id="user_login_header">
                 <h2>User Login</h2>
-            </header>
-            <br>
-            <br>
+            </div>
             <div class="input-container">
                 <i class="fa fa-user icon"></i>
                 <input type="text" class="input-field" placeholder="Username" name="uname" required><br>

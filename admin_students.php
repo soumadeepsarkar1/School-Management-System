@@ -168,7 +168,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <header><h2>Students</header>
+        <?php include('admin_header.php');?>
         <a href="admin.php"><< Back to admin panel</a><br>
         <button id="addStudentButton">Add new student</button>
         <div class="addStudentModal" id="addStudentModal" <?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){echo "style=\"display:block;\"";}?>>

@@ -2,6 +2,37 @@
 *{
 	box-sizing:border-box;
 }
+header,footer
+{
+	width:100%;
+	background-color:rgb(255, 136, 0);
+	height:10vh;
+	color:rgb(255, 255, 255);
+	text-align:center;
+	font-size:1.1em;
+	display:flex;
+	justify-content: space-between;
+}
+footer>div
+{
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:2%
+}
+#heading_and_created
+{
+	padding-top:1%
+}
+#hello
+{
+	padding-left:1%;
+	padding-top:2%;
+}
+#logout
+{
+	padding-right:1%;
+	padding-top:2%;
+}
 .addStudentModal
 {
 	display:none;
@@ -99,4 +130,31 @@ td,th
 {
 	width:15vw;
 	text-align: center;
+}
+.pill_button_group
+{
+	flex-direction: column;
+}
+.pill_button_row
+{
+	flex-direction: row;
+	margin-left:auto;
+	margin-right:auto;
+}
+.pill_button {
+  background-color: #ddd;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+  font-size: 2em;
+}
+
+.pill_button:hover {
+  background-color: #f1f1f1;
 }

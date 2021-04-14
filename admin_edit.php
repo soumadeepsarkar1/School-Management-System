@@ -15,6 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
+        <?php include('admin_header.php');?>
         <?php
             $nameErr=$userName=$passwordErr=$password1Err=$password2Err="";
             $name =$userNameErr=$lastName = $password1=$password2= "";

@@ -21,11 +21,11 @@
     </head>
     <body>
         <?php include 'side_nav.php'; ?>
-        <header>
-           
-            <h1>ANNOUNCEMENTS</h1>
-        </header>
-    </div>
-    
+        <div class="main_container">
+            <header>
+            
+                <h1>ANNOUNCEMENTS</h1>
+            </header>
+        </div>
     </body>
 </html>

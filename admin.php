@@ -16,11 +16,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <div><div>Hello, <?php echo($_SESSION["username"]);?></div><a href ='logout.php'>Log out</a></div>
-        <div><a href ='admin_teachers.php'>Teachers</a></div>
-        <div><a href ='admin_students.php'>Students</a></div>
-        <div><a href ='admin_class_routine.php'>Class routine</a></div>
-        <div><a href ='admin_edit.php'>Edit admin details</a></div>
-        <div><a href ='admin_create.php'>Add a new admin</a></div>
+        <?php include('admin_header.php');?>
+        <div class="flex-container pill_button_group">
+            <div class="pill_button_row">
+                <a class="pill_button" href ='admin_teachers.php'>Teachers</a>
+                <a class="pill_button" href ='admin_students.php'>Students</a>
+            </div>
+            <div class="pill_button_row">
+                <a class="pill_button" href ='admin_class_routine.php'>Class routine</a>
+                <a class="pill_button" href ='admin_edit.php'>Edit admin details</a>
+            </div>
+            <div class="pill_button_row">
+                <a class="pill_button" href ='admin_create.php'>Add a new admin</a>
+                <a class="pill_button" href ="admin_fees.php">Fees details</a>
+            </div>
+        </div>
+        <footer>
+            <div>
+                Created by Soumadeep Sarkar, Soumya Bhattacharjee and Sohini Dutta
+            </div>
+        </footer>
     </body>
 </html>
