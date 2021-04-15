@@ -29,7 +29,7 @@
       <div class="row">
         <div class="column">
           <div class="card">
-            <img src="soumya1.jpg" alt="Mike" style="width:100%">
+            <img src="images/soumya1.jpg" alt="Mike" style="width:100%">
             <div class="container">
               <h2>Soumya Bhattacharjee</h2>
               <p class="title">3rd Year Student</p>
@@ -42,7 +42,7 @@
         </div>
         <div class="column">
           <div class="card">
-            <img src="soumadeep.png" alt="Jane" style="width: 100%">
+            <img src="images/soumadeep.png" alt="Jane" style="width: 100%">
             <div class="container">
               <h2>Soumadeep Sarkar</h2>
               <p class="title">3rd Year Student</p>
@@ -55,11 +55,12 @@
         </div>
         <div class="column">
           <div class="card">
-            <img src="sohini1.jpeg" alt="John" style="width:100%">
+            <img src="images/sohini1.jpeg" alt="John" style="width:100%">
             <div class="container">
               <h2>Sohini Dutta</h2>
               <p class="title">3rd Year Student</p>
               <p>Computer Science and Enginnering, B.Tech</p>
+              <p>Roll - 61</p>
               <p>sohinidutta008@gmail.com</p>
               <p><button class="button">Contact</button></p>
             </div>

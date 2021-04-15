@@ -51,7 +51,10 @@
         body 
         {
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #66ff99;
+            background-image:url("images/background.jpg");
+            background-repeat: no-repeat;
+            background-size: 100% 100vh;
+            background-blend-mode: lighten;
         }
         * {box-sizing: border-box;}
         .input-container {
@@ -111,6 +114,7 @@
         label
         {
             font-size:1.5em;
+            color: #001fc5;
         }
         header
         {
