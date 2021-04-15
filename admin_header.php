@@ -3,7 +3,7 @@
     <div>Hello, <?php echo($_SESSION["username"]);?></div>
     </div>
     <div id="heading_and_created">
-        <div>
+        <div style="font-size:1.5em;">
             School Management System Admin
         </div>
         <div>
