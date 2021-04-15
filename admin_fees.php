@@ -93,12 +93,7 @@
         <div id="studentFeesDetails">Students fees details displayed here<br></div>
         <script>
             function showStudents(str,cls) {
-                var xhttp;  
-                if (str == "") 
-                {
-                    document.getElementById("studentFeesDetails").innerHTML = "";
-                    return;
-                }
+                var xhttp;
                 xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function()
                 {
