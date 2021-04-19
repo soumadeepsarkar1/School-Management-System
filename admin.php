@@ -17,20 +17,22 @@
     </head>
     <body>
         <?php include('admin_header.php');?>
-        <div class="flex-container pill_button_group">
-            <div class="pill_button_row">
-                <a class="pill_button" href ='admin_teachers.php'>Teachers</a>
-                <a class="pill_button" href ='admin_students.php'>Students</a>
+        <section>
+            <div class="flex-container pill_button_group">
+                <div class="pill_button_row">
+                    <a class="pill_button" href ='admin_teachers.php'>Teachers</a>
+                    <a class="pill_button" href ='admin_students.php'>Students</a>
+                </div>
+                <div class="pill_button_row">
+                    <a class="pill_button" href ='admin_class_routine.php'>Class routine</a>
+                    <a class="pill_button" href ='admin_edit.php'>Edit admin details</a>
+                </div>
+                <div class="pill_button_row">
+                    <a class="pill_button" href ='admin_create.php'>Add a new admin</a>
+                    <a class="pill_button" href ="admin_fees.php">Fees details</a>
+                </div>
             </div>
-            <div class="pill_button_row">
-                <a class="pill_button" href ='admin_class_routine.php'>Class routine</a>
-                <a class="pill_button" href ='admin_edit.php'>Edit admin details</a>
-            </div>
-            <div class="pill_button_row">
-                <a class="pill_button" href ='admin_create.php'>Add a new admin</a>
-                <a class="pill_button" href ="admin_fees.php">Fees details</a>
-            </div>
-        </div>
+        </section>
         <footer>
             <div>
                 Created by Soumadeep Sarkar, Soumya Bhattacharjee and Sohini Dutta

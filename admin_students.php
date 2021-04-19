@@ -169,76 +169,80 @@
     </head>
     <body>
         <?php include('admin_header.php');?>
-        <a href="admin.php"><< Back to admin panel</a><br>
-        <button id="addStudentButton">Add new student</button>
-        <div class="addStudentModal" id="addStudentModal" <?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){echo "style=\"display:block;\"";}?>>
-			<div class="addStudentModalContent">
-				<div class="modalHeader">
-					<div class="modalHeaderText">
-						New Student
-					</div>
-					<span class="closebutton" id="addStudentCloseButton">&times;</span>
-				</div>
-				<form class="addStudentForm" name="addStudentForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                    <input class="addStudentFormInput" type="text" name="name"  placeholder="Name" value = "<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){ echo($_POST["name"]); }?>" required><span class="error">* <?php echo $nameErr;?></span>
-                    <input type="text" class="addStudentFormInput" name="uname" placeholder="Username." value = "<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){ echo($_POST["uname"]); }?>" required><span class="error">* <?php echo $userNameErr;?></span>
-                    <input class="addStudentFormInput" type="text" name="admissionNo"  placeholder="Admission No." value = "<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){ echo($_POST["admissionNo"]); }?>" required><span class="error">* <?php echo $admissionNoErr;?></span>
-                    <input class="addStudentFormInput" type="number" name="class" placeholder="Class (1 - 12)"  value = "<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){ echo($_POST["class"]); }?>" min="1" max="12" required><span class="error">* <?php echo $classErr;?></span>
-                    <input class="addStudentFormInput" type="password" name="password1" placeholder="Password" required><span class="error">* <?php echo $password1Err;?></span><br>
-                    <input type="password" class="addStudentFormInput" name="password2" placeholder="Confirm password" required><span class="error">* <?php echo $password2Err;?></span><br>
-                    <div class="error"><?php echo $passwordErr;?></div>
-                    <input type="radio" class="addStudentFormRadioInput" name="gender" value="male" checked>
-                    <label for="male" class="addStudentFormRadioInputLabel">Male</label>
-                    <input type="radio" class="addStudentFormRadioInput" name="gender" value="female">
-                    <label for="female" class="addStudentFormRadioInputLabel">Female</label>
-                    <input type="radio" class="addStudentFormRadioInput" name="gender" value="other">
-                    <label for="other" class="addStudentFormRadioInputLabel">Other</label><br>
-					<button type="submit" id="addButton" name="Submit" value="addStudent">Add Student</button>
-                    <!-- admission date will be the date when the admin creates the student record -->
-                    <!-- roll no will be max(roll no. of that class) + 1 -->
-				</form>
-			</div>
-		</div>
-        <div id="admin_student_content" class=flex-container>
-            <table>
-                <th class="id">User_id</th><th>Name</th><th>Class</th><th>Roll No.</th><th>Email</th><th>Actions</th>
-                <?php
-                $sql="select * from (select user_id, name from users) as u natural join (select user_id,class, rollNo,email from students) as s order by class,name;";
-                $result=$conn->query($sql);
-                if($result->num_rows>0)
-                {
-                    while($row=$result->fetch_assoc())
+        <section>
+            <a href="admin.php"><< Back to admin panel</a><br>
+            <button id="addStudentButton">Add new student</button>
+            <div class="addStudentModal" id="addStudentModal" <?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){echo "style=\"display:block;\"";}?>>
+                <div class="addStudentModalContent">
+                    <div class="modalHeader">
+                        <div class="modalHeaderText">
+                            New Student
+                        </div>
+                        <span class="closebutton" id="addStudentCloseButton">&times;</span>
+                    </div>
+                    <form class="addStudentForm" name="addStudentForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                        <input class="addStudentFormInput" type="text" name="name"  placeholder="Name" value = "<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){ echo($_POST["name"]); }?>" required><span class="error">* <?php echo $nameErr;?></span>
+                        <input type="text" class="addStudentFormInput" name="uname" placeholder="Username." value = "<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){ echo($_POST["uname"]); }?>" required><span class="error">* <?php echo $userNameErr;?></span>
+                        <input class="addStudentFormInput" type="text" name="admissionNo"  placeholder="Admission No." value = "<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){ echo($_POST["admissionNo"]); }?>" required><span class="error">* <?php echo $admissionNoErr;?></span>
+                        <input class="addStudentFormInput" type="number" name="class" placeholder="Class (1 - 12)"  value = "<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $noError==0){ echo($_POST["class"]); }?>" min="1" max="12" required><span class="error">* <?php echo $classErr;?></span>
+                        <input class="addStudentFormInput" type="password" name="password1" placeholder="Password" required><span class="error">* <?php echo $password1Err;?></span><br>
+                        <input type="password" class="addStudentFormInput" name="password2" placeholder="Confirm password" required><span class="error">* <?php echo $password2Err;?></span><br>
+                        <div class="error"><?php echo $passwordErr;?></div>
+                        <input type="radio" class="addStudentFormRadioInput" name="gender" value="male" checked>
+                        <label for="male" class="addStudentFormRadioInputLabel">Male</label>
+                        <input type="radio" class="addStudentFormRadioInput" name="gender" value="female">
+                        <label for="female" class="addStudentFormRadioInputLabel">Female</label>
+                        <input type="radio" class="addStudentFormRadioInput" name="gender" value="other">
+                        <label for="other" class="addStudentFormRadioInputLabel">Other</label><br>
+                        <button type="submit" id="addButton" name="Submit" value="addStudent">Add Student</button>
+                        <!-- admission date will be the date when the admin creates the student record -->
+                        <!-- roll no will be max(roll no. of that class) + 1 -->
+                    </form>
+                </div>
+            </div>
+            <div id="admin_student_content" class=flex-container>
+                <table>
+                    <th class="id">User_id</th><th>Name</th><th>Class</th><th>Roll No.</th><th>Email</th><th>Actions</th>
+                    <?php
+                    $sql="select * from (select user_id, name from users) as u natural join (select user_id,class, rollNo,email from students) as s order by class,name;";
+                    $result=$conn->query($sql);
+                    if($result->num_rows>0)
                     {
-                        echo "
-                        <tr class=\"data\">
-                            <td class=\"id\">".$row["user_id"]."</td><td>".$row["name"]."</td><td>".$row["class"]."</td><td>".$row["rollNo"]."</td><td>".$row["email"]."</td>                            </td>
-                            <td>
-                                <a href=\"admin_student_details.php?user_id=".$row["user_id"]."\">Details</a>
-                                <a href=\"admin_student_update.php?user_id=".$row["user_id"]."\">Update</a>
-                                <a href=\"admin_student_delete.php?user_id=".$row["user_id"]."\">Delete</a>
-                            </td>
-                        </tr>";
+                        while($row=$result->fetch_assoc())
+                        {
+                            echo "
+                            <tr class=\"data\">
+                                <td class=\"id\">".$row["user_id"]."</td><td>".$row["name"]."</td><td>".$row["class"]."</td><td>".$row["rollNo"]."</td><td>".$row["email"]."</td>                            </td>
+                                <td>
+                                    <a href=\"admin_student_details.php?user_id=".$row["user_id"]."\">Details</a>
+                                    <a href=\"admin_student_update.php?user_id=".$row["user_id"]."\">Update</a>
+                                    <a href=\"admin_student_delete.php?user_id=".$row["user_id"]."\">Delete</a>
+                                </td>
+                            </tr>";
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
+            <script>
+                var addStudentButton=document.getElementById("addStudentButton");
+                var addStudentModal=document.getElementById("addStudentModal");
+                var addStudentCloseButton=document.getElementById("addStudentCloseButton");
+                addStudentButton.onclick=function(){addStudentModal.style.display="block"}
+                addStudentCloseButton.onclick=function(){addStudentModal.style.display="none";}
+                window.onclick = function(event) 
+                {
+                    if (event.target == addStudentModal) 
+                    {
+                    addStudentModal.style.display = "none";
                     }
                 }
-                ?>
-            </table>
-        </div>
-        <script>
-            var addStudentButton=document.getElementById("addStudentButton");
-            var addStudentModal=document.getElementById("addStudentModal");
-            var addStudentCloseButton=document.getElementById("addStudentCloseButton");
-            addStudentButton.onclick=function(){addStudentModal.style.display="block"}
-            addStudentCloseButton.onclick=function(){addStudentModal.style.display="none";}
-            window.onclick = function(event) 
-            {
-                if (event.target == addStudentModal) 
-                {
-                addStudentModal.style.display = "none";
-                }
-            }
-        </script>
-        <div id="studentList">
-            
-        </div>
+            </script>
+        </section>
+        <footer>
+            <div>
+                Created by Soumadeep Sarkar, Soumya Bhattacharjee and Sohini Dutta
+            </div>
+        </footer>
     </body>
 </head>

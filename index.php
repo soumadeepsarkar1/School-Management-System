@@ -115,6 +115,7 @@
         {
             font-size:1.5em;
             color: #001fc5;
+            text-shadow: 0 0 6px #f6ff00,0 0 6px #f6ff00;
         }
         header
         {
@@ -126,39 +127,67 @@
             color:white;
             padding:14px;
         }
+        footer
+        {
+            width:100%;
+            background-color:blue;
+            height:10vh;
+            color:rgb(255, 255, 255);
+            text-align:center;
+            font-size:1.1em;
+            display:flex;
+            justify-content: space-between;
+        }
+        footer>div
+        {
+            margin-left:auto;
+            margin-right:auto;
+            margin-top:2%
+        }
+        section
+        {
+            min-height:75vh;
+        }
         </style>
     </head>
     <body>
         <header>
             School Management System
         </header>
-        <div class="error">
-            <?php
-                if($loginerror==1)
-                {
-                    echo("Invalid login credentials!");
-                }
-            ?>
-        </div>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" style="max-width:500px;margin:auto">
-            <div id="user_login_header">
-                <h2>User Login</h2>
+        <section>
+            <div class="error">
+                <?php
+                    if($loginerror==1)
+                    {
+                        echo("Invalid login credentials!");
+                    }
+                ?>
             </div>
-            <div class="input-container">
-                <i class="fa fa-user icon"></i>
-                <input type="text" class="input-field" placeholder="Username" name="uname" required><br>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" style="max-width:500px;margin:auto">
+                <div id="user_login_header">
+                    <h2>User Login</h2>
+                </div>
+                <div class="input-container">
+                    <i class="fa fa-user icon"></i>
+                    <input type="text" class="input-field" placeholder="Username" name="uname" required><br>
+                </div>
+                <div class="input-container">
+                    <i class="fa fa-key icon"></i>
+                    <input type="password" placeholder="Password" class="input-field" name="password" required><br>
+                </div>
+                <input type="radio" name="userType" value="admin" checked>
+                <label for="admin">Admin</label>
+                <input type="radio" name="userType" value="staff">
+                <label for="staff">Staff</label>
+                <input type="radio" name="userType" value="student">
+                <label for="student">Student</label><br>
+                <input type="submit" value = "Login" class="btn">
+            </form>
+        </section>
+        <footer>
+            <div>
+                Created by Soumadeep Sarkar, Soumya Bhattacharjee and Sohini Dutta
             </div>
-            <div class="input-container">
-                <i class="fa fa-key icon"></i>
-                <input type="password" placeholder="Password" class="input-field" name="password" required><br>
-            </div>
-            <input type="radio" name="userType" value="admin" checked>
-            <label for="admin">Admin</label>
-            <input type="radio" name="userType" value="staff">
-            <label for="staff">Staff</label>
-            <input type="radio" name="userType" value="student">
-            <label for="student">Student</label><br>
-            <input type="submit" value = "Login" class="btn">
-        </form>
+        </footer>
     </body>
 </html>

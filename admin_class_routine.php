@@ -76,65 +76,72 @@
     </head>
     <body>
         <?php include('admin_header.php');?>
-        <a href="admin.php"><< Back to admin panel</a>
-        <div>
-            <form id="class_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-                <label for="class">Choose a class:</label>
-                <select name="class" id="class" form="class_form" onchange='if(this.value != 0) { this.form.submit(); }'>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                </select>
-            </form>
-            <script>
-                document.getElementById('class').value=<?php if(isset($_POST["class"])){echo($_POST["class"]);} else {echo(1);} ?>;
-            </script>
-        </div>
-        <div>
-            <?php
-                if($_SERVER["REQUEST_METHOD"]=="POST")
-                {
-                     echo("<form action=\"".htmlspecialchars($_SERVER["PHP_SELF"])."\" method=\"post\" enctype=\"multipart/form-data\">
-                            <label for=\"routine\">Upload a new routine (pdf or image file): </label>
-                            <input type=\"file\" name=\"routine\">
-                            <input type=\"hidden\" name=\"class\" value=\"".$_POST["class"]."\">
-                            <input type=\"submit\" value=\"Upload\">
-                        </form>");
-                }
-                if(isset($_POST["class"]))
-                {
-                    echo("<h2>Routine for class ".$_POST["class"]."</h2>");
-                    echo("<div>");
-                    $sql="select routine from class_routines where class=".$_POST["class"].";";
-                    $result = $conn->query($sql);
-                    $row = $result->fetch_assoc();
-                    if(!empty($row["routine"]))
+        <section>
+            <a href="admin.php"><< Back to admin panel</a>
+            <div>
+                <form id="class_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+                    <label for="class">Choose a class:</label>
+                    <select name="class" id="class" form="class_form" onchange='if(this.value != 0) { this.form.submit(); }'>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </form>
+                <script>
+                    document.getElementById('class').value=<?php if(isset($_POST["class"])){echo($_POST["class"]);} else {echo(1);} ?>;
+                </script>
+            </div>
+            <div>
+                <?php
+                    if($_SERVER["REQUEST_METHOD"]=="POST")
                     {
-                        echo("<embed src=\"routines/".$row["routine"]."\" width=\"1000px\" height=\"700px\" />");
+                        echo("<form action=\"".htmlspecialchars($_SERVER["PHP_SELF"])."\" method=\"post\" enctype=\"multipart/form-data\">
+                                <label for=\"routine\">Upload a new routine (pdf or image file): </label>
+                                <input type=\"file\" name=\"routine\">
+                                <input type=\"hidden\" name=\"class\" value=\"".$_POST["class"]."\">
+                                <input type=\"submit\" value=\"Upload\">
+                            </form>");
                     }
-                    else
+                    if(isset($_POST["class"]))
                     {
-                        echo("Routine not uploaded");
+                        echo("<h2>Routine for class ".$_POST["class"]."</h2>");
+                        echo("<div>");
+                        $sql="select routine from class_routines where class=".$_POST["class"].";";
+                        $result = $conn->query($sql);
+                        $row = $result->fetch_assoc();
+                        if(!empty($row["routine"]))
+                        {
+                            echo("<embed src=\"routines/".$row["routine"]."\" width=\"1000px\" height=\"700px\" />");
+                        }
+                        else
+                        {
+                            echo("Routine not uploaded");
+                        }
+                        echo("</div>");
                     }
-                    echo("</div>");
-                }
-            ?>
-            <!-- <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
-                <label for="routine">Upload a new routine (pdf or image file): </label>
-                <input type="file" name="routine">
-                <input type="hidden" name="class" value="<?php echo($_POST["class"]);?>">
-            </form> -->
-        </div>
-        <!-- <embed src="student_images/14aad77f7ede362ef41f0480e6efa133.jpg" width="1000px" height="700px" /> -->
+                ?>
+                <!-- <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
+                    <label for="routine">Upload a new routine (pdf or image file): </label>
+                    <input type="file" name="routine">
+                    <input type="hidden" name="class" value="<?php echo($_POST["class"]);?>">
+                </form> -->
+            </div>
+            <!-- <embed src="student_images/14aad77f7ede362ef41f0480e6efa133.jpg" width="1000px" height="700px" /> -->
+        </section>
+        <footer>
+            <div>
+                Created by Soumadeep Sarkar, Soumya Bhattacharjee and Sohini Dutta
+            </div>
+        </footer>
     </body>
 </html>
         
